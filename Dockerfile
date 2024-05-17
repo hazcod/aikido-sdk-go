@@ -29,7 +29,7 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 USER 1000
 
 # add our application binary
-COPY tail2sen /aikido
+COPY aikido /aikido
 
 # entrypoint
 ENTRYPOINT ["/aikido"]
