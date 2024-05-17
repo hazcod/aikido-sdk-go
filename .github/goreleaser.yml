@@ -1,0 +1,46 @@
+before:
+  hooks:
+  - go mod download
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore'
+
+release:
+  disable: false
+
+dockers:
+  -
+    image_templates:
+    - "ghcr.io/hazcod/aikido-sdk-go/aikido-sdk-go:latest"
+    - "ghcr.io/hazcod/aikido-sdk-go/aikido-sdk-go:{{ .Tag }}"
+    - "ghcr.io/hazcod/aikido-sdk-go/aikido-sdk-go:{{ .Major }}"
+
+sboms:
+  -
+    artifacts: archive
+
+builds:
+  -
+    id: cli
+    dir: ./cmd/
+    env: [CGO_ENABLED=0]
+    ldflags: [-w -s -extldflags "-static"]
+    goos: [darwin, linux, windows]
+    goarch: [amd64, arm64]
+    binary: aikido
+
+archives:
+  -
+    name_template: "aikido{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format: zip
