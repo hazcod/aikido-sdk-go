@@ -39,7 +39,17 @@ func toTitle(s string) string {
 }
 
 func (i *Issue) GetName() string {
-	return toTitle(i.Severity) + " " + i.Rule + " in " + i.AffectedPackage + " in repo " + i.CodeRepoName + " "
+	source := i.CodeRepoName
+	if source == "" {
+		source = i.ContainerRepoName
+	}
+
+	reason := i.Rule
+	if reason == "" {
+		reason = i.Type
+	}
+
+	return toTitle(i.Severity) + " vulnerability in " + reason + " in " + i.AffectedPackage + " from " + source
 }
 
 func (i *Issue) IsIgnored() bool {
