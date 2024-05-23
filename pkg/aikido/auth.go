@@ -78,7 +78,7 @@ func getNewAccessToken(clientID, clientSecret string) (*tokenResponse, error) {
 
 	// Create the request body
 	body := []byte("grant_type=client_credentials")
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %v", err)
 	}
