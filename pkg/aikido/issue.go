@@ -23,6 +23,7 @@ type Issue struct {
 	Rule              string `json:"rule"`
 	AffectedPackage   string `json:"affected_package"`
 	AffectedFile      string `json:"affected_file"`
+	CveID             string `json:"cve_id"`
 	FirstDetectedAt   int    `json:"first_detected_at"`
 	CodeRepoName      string `json:"code_repo_name"`
 	CodeRepoID        int    `json:"code_repo_id"`
